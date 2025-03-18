@@ -1,0 +1,27 @@
+
+services:
+  app:
+    image: antonio200/projeto-node:v1
+    container_name: app_node
+    ports:
+      - "3000:3000"  
+    depends_on:
+      - db  
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/meubanco  
+    restart: always
+
+  db:
+    image: postgres:latest
+    container_name: db_postgres
+    ports:
+      - "5432:5432"  # Porta do banco
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: meubanco
+    volumes:
+      - db_data:/var/lib/postgresql/data  
+
+volumes:
+  db_data:
